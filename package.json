@@ -1,0 +1,36 @@
+{
+  "name": "videoflux",
+  "author": "Deathspike",
+  "description": "Your gateway to next-generation video encoding.",
+  "license": "MIT",
+  "repository": "git://github.com/Deathspike/videoflux",
+  "version": "0.1.0",
+  "main": "dist",
+  "types": "dist",
+  "bin": {
+    "videoflux": "./bin/videoflux"
+  },
+  "engines": {
+    "node": ">= 18.0.0",
+    "npm": ">= 8.0.0"
+  },
+  "dependencies": {
+    "commander": "9.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.18",
+    "pre-commit": "1.2.2",
+    "prettier": "2.8.1",
+    "rimraf": "3.0.2",
+    "typescript": "4.9.4"
+  },
+  "scripts": {
+    "prepack": "npm run repository:prune && npm run repository:build",
+    "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write .",
+    "repository:build": "tsc",
+    "repository:prune": "rimraf build && rimraf dist",
+    "start": "node .",
+    "test": "npm run prettier:check"
+  }
+}
