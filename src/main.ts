@@ -6,7 +6,8 @@ export function main() {
     .description(require('../package').description)
     .version(require('../package').version)
     .addCommand(commandParse())
-    .addCommand(commandProbe());
+    .addCommand(commandProbe())
+    .addCommand(commandStats());
 }
 
 function commandParse() {
@@ -23,6 +24,13 @@ function commandProbe() {
     .arguments('<path...>')
     .description('Probe videos')
     .action(app.actions.probeAsync);
+}
+
+function commandStats() {
+  return new commander.Command('stats')
+    .arguments('<path...>')
+    .description('Videos stats')
+    .action(app.actions.statsAsync);
 }
 
 function optionQuality() {

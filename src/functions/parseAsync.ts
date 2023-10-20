@@ -6,12 +6,12 @@ import {Session} from './classes/Session';
 
 export async function parseAsync(filePath: string, options: app.Options) {
   const args = new Builder(filePath, qualities[options.quality]).build();
-  const outArgs = args.concat('-f', 'matroska', `${filePath}.vftmp`);
+  const outArgs = args.concat('-f', 'matroska', filePath + app.consts.tmpExt);
   if (await Session.runAsync(outArgs)) {
     const {dir, name} = path.parse(filePath);
-    const outPath = path.join(dir, `${name}.mkv`);
-    await fs.promises.rename(filePath, `${filePath}.vfbck`);
-    await fs.promises.rename(`${filePath}.vftmp`, outPath);
+    const outPath = path.join(dir, name + app.consts.vidExt);
+    await fs.promises.rename(filePath, filePath + app.consts.bckExt);
+    await fs.promises.rename(filePath + app.consts.tmpExt, outPath);
     return true;
   } else {
     return false;
