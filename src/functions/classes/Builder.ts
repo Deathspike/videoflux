@@ -15,7 +15,6 @@ export class Builder {
 
   private createArgs(args: Array<string>) {
     args.push('-y');
-    args.push('-hwaccel', 'auto');
     args.push('-i', this.filePath);
   }
 
