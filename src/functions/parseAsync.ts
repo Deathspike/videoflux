@@ -21,37 +21,37 @@ export async function parseAsync(filePath: string, options: app.Options) {
 const qualities = {
   hq: {
     av1Crf: 24,
-    av1Preset: 10,
+    av1Preset: 9,
     hqdn3d: false,
     opusBitRate: 96
   },
   hqd: {
     av1Crf: 24,
-    av1Preset: 10,
+    av1Preset: 9,
     hqdn3d: true,
     opusBitRate: 96
   },
   mq: {
     av1Crf: 32,
-    av1Preset: 10,
+    av1Preset: 9,
     hqdn3d: false,
     opusBitRate: 64
   },
   mqd: {
     av1Crf: 32,
-    av1Preset: 10,
+    av1Preset: 9,
     hqdn3d: true,
     opusBitRate: 64
   },
   lq: {
     av1Crf: 40,
-    av1Preset: 10,
+    av1Preset: 9,
     hqdn3d: false,
     opusBitRate: 48
   },
   lqd: {
     av1Crf: 40,
-    av1Preset: 10,
+    av1Preset: 9,
     hqdn3d: true,
     opusBitRate: 48
   }
