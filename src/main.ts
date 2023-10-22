@@ -7,6 +7,7 @@ export function main() {
     .version(require('../package').version)
     .addCommand(commandParse())
     .addCommand(commandProbe())
+    .addCommand(commandRollback())
     .addCommand(commandStats());
 }
 
@@ -24,6 +25,13 @@ function commandProbe() {
     .arguments('<path...>')
     .description('Probe videos')
     .action(app.actions.probeAsync);
+}
+
+function commandRollback() {
+  return new commander.Command('rollback')
+    .arguments('<path...>')
+    .description('Rollback videos')
+    .action(app.actions.rollbackAsync);
 }
 
 function commandStats() {
