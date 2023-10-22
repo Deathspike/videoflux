@@ -24,9 +24,9 @@ export class Session {
 
   private onData(buffer: Buffer) {
     for (const message of buffer.toString().split('\n')) {
+      console.debug(message);
       if (!/time=(\d{2}):(\d{2}):(\d{2}\.\d{2})/.test(message)) continue;
       this.didStart = true;
-      console.debug(message);
     }
   }
 
