@@ -4,7 +4,7 @@ import * as path from 'node:path';
 import {Builder} from './classes/Builder';
 import {Session} from './classes/Session';
 
-export async function parseAsync(filePath: string, options: app.Options) {
+export async function encodeAsync(filePath: string, options: app.Options) {
   const args = new Builder(filePath, qualities[options.quality]).build();
   const outArgs = args.concat('-f', 'matroska', filePath + app.consts.tmpExt);
   if (await Session.runAsync(outArgs)) {

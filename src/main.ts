@@ -5,19 +5,19 @@ export function main() {
   return new commander.Command(require('../package').name)
     .description(require('../package').description)
     .version(require('../package').version)
-    .addCommand(commandParse())
+    .addCommand(commandEncode())
     .addCommand(commandProbe())
     .addCommand(commandRollback())
     .addCommand(commandStats());
 }
 
-function commandParse() {
-  return new commander.Command('parse')
+function commandEncode() {
+  return new commander.Command('encode')
     .arguments('<path...>')
-    .description('Parse videos')
+    .description('Encode videos')
     .option('--force', 'Determines whether to force an re-encode')
     .addOption(optionQuality())
-    .action(app.actions.parseAsync);
+    .action(app.actions.encodeAsync);
 }
 
 function commandProbe() {

@@ -2,7 +2,7 @@ import * as app from '..';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 
-export async function parseAsync(paths: Array<string>, options: app.Options) {
+export async function encodeAsync(paths: Array<string>, options: app.Options) {
   for (const path of paths) {
     await checkAsync(path, options);
   }
@@ -37,9 +37,9 @@ async function directoryAsync(directoryPath: string, options: app.Options) {
 }
 
 async function fileAsync(filePath: string, options: app.Options) {
-  if (options.force) return await app.parseAsync(filePath, options);
+  if (options.force) return await app.encodeAsync(filePath, options);
   const metadata = await app.probeAsync(filePath);
   const streams = metadata.streams.filter(x => x.codec_type === 'video');
   const isAv1 = streams.every(x => x.codec_name === 'av1');
-  return isAv1 || (await app.parseAsync(filePath, options));
+  return isAv1 || (await app.encodeAsync(filePath, options));
 }
