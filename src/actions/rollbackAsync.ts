@@ -18,14 +18,14 @@ async function checkAsync(path: string) {
     console.log(`Finished ${path}`);
   } else if (stats.isFile() && path.endsWith(app.consts.bckExt)) {
     console.log(`Fetching ${path}`);
-    const result = await app.revertAsync(path, stats);
+    const result = await app.rollbackAsync(path, stats);
     console.log(`Finished ${path} (${result})`);
   }
 }
 
 async function directoryAsync(directoryPath: string) {
   const names = await fs.promises.readdir(directoryPath).catch(() => []);
-  const paths = new Set(names.map(x => path.join(directoryPath, x)));
+  const paths = names.map(x => path.join(directoryPath, x));
   for (const path of paths) {
     const stats = await fs.promises.stat(path).catch(() => {});
     if (stats?.isDirectory()) {

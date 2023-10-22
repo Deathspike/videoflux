@@ -25,7 +25,7 @@ async function checkAsync(path: string) {
 
 async function directoryAsync(directoryPath: string) {
   const names = await fs.promises.readdir(directoryPath).catch(() => []);
-  const paths = new Set(names.map(x => path.join(directoryPath, x)));
+  const paths = names.map(x => path.join(directoryPath, x));
   for (const path of paths) {
     const stats = await fs.promises.stat(path).catch(() => {});
     if (stats?.isDirectory()) {
