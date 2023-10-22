@@ -2,13 +2,12 @@ import * as fs from 'node:fs';
 import {pairAsync} from './helpers/pairAsync';
 
 export async function rollbackAsync(filePath: string, fileStats?: fs.Stats) {
-  const pair = await pairAsync(filePath, fileStats);
-  const {input, output} = pair;
-  const {inputPath, outputPath} = pair;
+  const result = await pairAsync(filePath, fileStats);
+  const {input, output} = result;
   if (input && output) {
-    await fs.promises.unlink(outputPath);
-    const originalPath = inputPath.replace(/\.[^\.]+$/, '');
-    await fs.promises.rename(inputPath, originalPath);
+    await fs.promises.unlink(result.outputPath);
+    const originalPath = result.inputPath.replace(/\.[^\.]+$/, '');
+    await fs.promises.rename(result.inputPath, originalPath);
     return true;
   } else {
     return false;

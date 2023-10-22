@@ -5,10 +5,18 @@ export function main() {
   return new commander.Command(require('../package').name)
     .description(require('../package').description)
     .version(require('../package').version)
+    .addCommand(commandCommit())
     .addCommand(commandEncode())
     .addCommand(commandInfo())
     .addCommand(commandRollback())
     .addCommand(commandServer());
+}
+
+function commandCommit() {
+  return new commander.Command('commit')
+    .arguments('<path...>')
+    .description('Commit videos')
+    .action(app.actions.commitAsync);
 }
 
 function commandEncode() {
