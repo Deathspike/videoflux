@@ -4,7 +4,7 @@
   "description": "Your gateway to next-generation video encoding.",
   "license": "MIT",
   "repository": "git://github.com/Deathspike/videoflux",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist",
   "types": "dist",
   "bin": {
