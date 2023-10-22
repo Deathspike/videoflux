@@ -6,9 +6,9 @@ export function main() {
     .description(require('../package').description)
     .version(require('../package').version)
     .addCommand(commandEncode())
-    .addCommand(commandProbe())
+    .addCommand(commandInfo())
     .addCommand(commandRollback())
-    .addCommand(commandStats());
+    .addCommand(commandServer());
 }
 
 function commandEncode() {
@@ -20,11 +20,11 @@ function commandEncode() {
     .action(app.actions.encodeAsync);
 }
 
-function commandProbe() {
-  return new commander.Command('probe')
+function commandInfo() {
+  return new commander.Command('info')
     .arguments('<path...>')
-    .description('Probe videos')
-    .action(app.actions.probeAsync);
+    .description('Videos info')
+    .action(app.actions.infoAsync);
 }
 
 function commandRollback() {
@@ -34,11 +34,11 @@ function commandRollback() {
     .action(app.actions.rollbackAsync);
 }
 
-function commandStats() {
-  return new commander.Command('stats')
-    .arguments('<path...>')
-    .description('Videos stats')
-    .action(app.actions.statsAsync);
+function commandServer() {
+  return new commander.Command('server')
+    .description('Listen for HTTP events')
+    .addOption(optionQuality())
+    .action(app.actions.serverAsync);
 }
 
 function optionQuality() {
