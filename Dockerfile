@@ -11,7 +11,8 @@ RUN npm install && npm run prepack
 # ========================================
 FROM node:18-alpine
 WORKDIR /app
-RUN apk add --no-cache ffmpeg
+COPY --from=mwader/static-ffmpeg:6.0-1 /ffmpeg /usr/local/bin
+COPY --from=mwader/static-ffmpeg:6.0-1 /ffprobe /usr/local/bin
 COPY --from=build /app/bin ./bin
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/package.json .
