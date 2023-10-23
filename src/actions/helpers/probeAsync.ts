@@ -1,4 +1,4 @@
-import {spawnAsync} from './helpers/spawnAsync';
+import {spawnAsync} from './spawnAsync';
 
 export async function probeAsync(filePath: string) {
   const args = ['-v', 'quiet', '-print_format', 'json', '-show_streams'];

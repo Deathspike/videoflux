@@ -18,7 +18,7 @@ async function checkAsync(path: string) {
     console.log(`Finished ${path}`);
   } else if (stats.isFile() && path.endsWith(app.consts.bckExt)) {
     console.log(`Fetching ${path}`);
-    const result = await app.rollbackAsync(path, stats);
+    const result = await app.rollbackAsync(path, stats).catch(() => false);
     console.log(`Finished ${path} (${result})`);
   }
 }

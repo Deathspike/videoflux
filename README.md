@@ -42,8 +42,8 @@ Options:
 Commands:
   commit <path...>            Commit videos
   encode [options] <path...>  Encode videos
-  info <path...>              Videos info
   rollback <path...>          Rollback videos
   server [options]            Listen for HTTP events
+  stats <path...>             Video stats
   help [command]              display help for command
 ```
