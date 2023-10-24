@@ -7,6 +7,7 @@ export function main() {
     .version(require('../package').version)
     .addCommand(commandCommit())
     .addCommand(commandEncode())
+    .addCommand(commandEnqueue())
     .addCommand(commandRollback())
     .addCommand(commandServer())
     .addCommand(commandStats());
@@ -26,6 +27,14 @@ function commandEncode() {
     .option('--force', 'Determines whether to force an re-encode')
     .addOption(optionQuality())
     .action(app.actions.encodeAsync);
+}
+
+function commandEnqueue() {
+  return new commander.Command('enqueue')
+    .argument('<serverUrl>')
+    .arguments('<path...>')
+    .description('Enqueue video encodes')
+    .action(app.actions.enqueueAsync);
 }
 
 function commandRollback() {
