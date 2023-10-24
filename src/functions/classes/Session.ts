@@ -2,14 +2,16 @@ import * as childProcess from 'node:child_process';
 import {Future} from './Future';
 
 export class Session {
+  private readonly exit = new Future<boolean>();
+  private didStart = false;
+
   private constructor(
     private readonly args: Array<string>,
-    private readonly exit = new Future<boolean>(),
-    private didStart = false
+    private readonly verbose: boolean
   ) {}
 
-  static async runAsync(args: Array<string>) {
-    const session = new Session(args);
+  static async runAsync(args: Array<string>, verbose = false) {
+    const session = new Session(args, verbose);
     session.spawn();
     return await session.exit.getAsync();
   }
@@ -24,9 +26,9 @@ export class Session {
 
   private onData(buffer: Buffer) {
     for (const message of buffer.toString().split('\n')) {
+      this.didStart ||= /time=(\d{2}):(\d{2}):(\d{2}\.\d{2})/.test(message);
+      if (!this.verbose) continue;
       console.debug(message);
-      if (!/time=(\d{2}):(\d{2}):(\d{2}\.\d{2})/.test(message)) continue;
-      this.didStart = true;
     }
   }
 

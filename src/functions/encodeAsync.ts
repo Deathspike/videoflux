@@ -7,7 +7,7 @@ import {Session} from './classes/Session';
 export async function encodeAsync(filePath: string, options: app.Options) {
   const args = new Builder(filePath, qualities[options.quality]).build();
   const outArgs = args.concat('-f', 'matroska', filePath + app.consts.tmpExt);
-  if (await Session.runAsync(outArgs)) {
+  if (await Session.runAsync(outArgs, options.verbose)) {
     const {dir, name} = path.parse(filePath);
     const outPath = path.join(dir, name + app.consts.vidExt);
     await fs.promises.rename(filePath, filePath + app.consts.bckExt);

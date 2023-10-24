@@ -15,16 +15,17 @@ export function main() {
 
 function commandCommit() {
   return new commander.Command('commit')
-    .arguments('<path...>')
+    .argument('<path...>')
     .description('Commit videos')
     .action(app.actions.commitAsync);
 }
 
 function commandEncode() {
   return new commander.Command('encode')
-    .arguments('<path...>')
+    .argument('<path...>')
     .description('Encode videos')
-    .option('--force', 'Determines whether to force an re-encode')
+    .option('-f, --force', 'Determines whether to force re-encodes')
+    .option('-v, --verbose', 'Determines whether logging is verbose')
     .addOption(optionQuality())
     .action(app.actions.encodeAsync);
 }
@@ -32,14 +33,14 @@ function commandEncode() {
 function commandEnqueue() {
   return new commander.Command('enqueue')
     .argument('<serverUrl>')
-    .arguments('<path...>')
+    .argument('<path...>')
     .description('Enqueue video encodes')
     .action(app.actions.enqueueAsync);
 }
 
 function commandRollback() {
   return new commander.Command('rollback')
-    .arguments('<path...>')
+    .argument('<path...>')
     .description('Rollback videos')
     .action(app.actions.rollbackAsync);
 }
@@ -53,13 +54,14 @@ function commandServer() {
 
 function commandStats() {
   return new commander.Command('stats')
-    .arguments('<path...>')
+    .argument('<path...>')
     .description('Video stats')
     .action(app.actions.statsAsync);
 }
 
 function optionQuality() {
-  return new commander.Option('--quality <s>', 'Determines the encode quality')
+  const description = 'Determines the encode quality';
+  return new commander.Option('-q, --quality <s>', description)
     .choices(['hq', 'hqd', 'mq', 'mqd', 'lq', 'lqd'])
     .default('hq');
 }
