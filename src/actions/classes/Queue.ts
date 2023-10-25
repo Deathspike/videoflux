@@ -36,6 +36,10 @@ export class Queue {
     this.writeQueue = this.writeQueue.then(() => this.writeAsync());
   }
 
+  slice() {
+    return this.items.slice();
+  }
+
   private async processAsync() {
     while (this.items.length) {
       try {

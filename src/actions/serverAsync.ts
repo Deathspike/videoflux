@@ -8,7 +8,7 @@ const packageData = require('../../package');
 export async function serverAsync(options: app.Options) {
   const queue = await Queue.createAsync('queue.json', createHandler(options));
   const server = fastify.default();
-  server.route(get());
+  server.route(get(queue));
   server.route(post(queue));
   await server.listen({host: '0.0.0.0', port: 8670});
 }
@@ -19,11 +19,17 @@ function createHandler(options: app.Options) {
   };
 }
 
-function get(): fastify.RouteOptions {
+function get(queue: Queue): fastify.RouteOptions {
   return {
     method: 'GET',
     url: '*',
-    handler: (_, res) => res.send(`${packageData.name}:${packageData.version}`)
+    handler: (_, res) => {
+      res.send({
+        name: packageData.name,
+        version: packageData.version,
+        queue: queue.slice()
+      });
+    }
   };
 }
 
