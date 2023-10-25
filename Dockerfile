@@ -15,8 +15,10 @@ COPY --from=mwader/static-ffmpeg:6.0-1 /ffmpeg /usr/local/bin
 COPY --from=mwader/static-ffmpeg:6.0-1 /ffprobe /usr/local/bin
 COPY --from=build /app/bin ./bin
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/Docker.sh .
 COPY --from=build /app/package.json .
 COPY --from=build /app/package-lock.json .
-RUN npm install --omit=dev
+RUN apk add --no-cache shadow su-exec && chmod +x Docker.sh && npm install --omit=dev
 EXPOSE 8670
-ENTRYPOINT ["node", "bin/videoflux", "server"]
+ENTRYPOINT ["/app/Docker.sh"]
+CMD ["node", "bin/videoflux", "server"]
