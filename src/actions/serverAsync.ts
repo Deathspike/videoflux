@@ -2,14 +2,21 @@ import * as app from '..';
 import * as fastify from 'fastify';
 import {Data} from './schemas/Data';
 import {FromSchema} from 'json-schema-to-ts';
-let packageData = require('../../package');
-let queue = Promise.resolve();
+import {Queue} from './classes/Queue';
+const packageData = require('../../package');
 
 export async function serverAsync(options: app.Options) {
+  const queue = await Queue.createAsync('queue.json', createHandler(options));
   const server = fastify.default();
   server.route(get());
-  server.route(post(options));
+  server.route(post(queue));
   await server.listen({host: '0.0.0.0', port: 8670});
+}
+
+function createHandler(options: app.Options) {
+  return async (path: string) => {
+    await app.actions.encodeAsync([path], options);
+  };
 }
 
 function get(): fastify.RouteOptions {
@@ -20,7 +27,7 @@ function get(): fastify.RouteOptions {
   };
 }
 
-function post(options: app.Options): fastify.RouteOptions {
+function post(queue: Queue): fastify.RouteOptions {
   return {
     method: 'POST',
     url: '*',
@@ -29,14 +36,9 @@ function post(options: app.Options): fastify.RouteOptions {
     },
     handler: (req, res) => {
       const data = req.body as FromSchema<typeof Data>;
-      enqueue(options, data.movieFile?.path);
-      enqueue(options, data.series?.path);
+      queue.enqueue(data.movieFile?.path);
+      queue.enqueue(data.series?.path);
       res.send();
     }
   };
-}
-
-function enqueue(options: app.Options, path?: string) {
-  if (!path) return;
-  queue = queue.then(() => app.actions.encodeAsync([path], options));
 }
