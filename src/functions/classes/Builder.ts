@@ -16,6 +16,7 @@ export class Builder {
   private createArgs(args: Array<string>) {
     args.push('-y');
     args.push('-i', this.filePath);
+    args.push('-map', '0');
   }
 
   private createAudioStream(args: Array<string>) {
