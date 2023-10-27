@@ -21,6 +21,7 @@ export class Builder {
   private createAudioStream(args: Array<string>) {
     args.push('-c:a', 'libopus');
     args.push('-b:a', `${this.params.opusBitRate}k`);
+    args.push('-af', 'aformat=channel_layouts=7.1|5.1|stereo');
   }
 
   private createVideoFilter(args: Array<string>) {
