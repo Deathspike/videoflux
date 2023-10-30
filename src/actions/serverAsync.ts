@@ -16,7 +16,6 @@ export async function serverAsync(options: app.Options) {
 function createHandler(options: app.Options) {
   return async (path: string) => {
     await app.actions.encodeAsync([path], options);
-    await app.actions.torrentAsync([path]);
   };
 }
 
