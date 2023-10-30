@@ -39,8 +39,8 @@ async function directoryAsync(directoryPath: string, filePaths: Array<string>) {
 }
 
 async function writeAsync(rootPath: string, filePaths: Array<string>) {
-  const {dir, name} = path.parse(rootPath);
-  const torrentPath = path.join(dir, `${name}.torrent`);
+  const {dir, base} = path.parse(rootPath);
+  const torrentPath = path.join(dir, `${base}.torrent`);
   console.log(`Fetching ${torrentPath}`);
   const torrent = await app.torrentAsync(rootPath, filePaths);
   await fs.promises.writeFile(torrentPath, torrent);

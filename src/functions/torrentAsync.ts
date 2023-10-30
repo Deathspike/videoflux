@@ -4,7 +4,7 @@ import {getAnnounceList} from './helpers/getAnnounceList';
 import createTorrent from 'create-torrent';
 
 export async function torrentAsync(rootPath: string, filePaths: Array<string>) {
-  const {name} = path.parse(rootPath);
+  const name = path.basename(rootPath);
   const sizeInBytes = await getSizeInBytesAsync(filePaths);
   const pieceLength = calculatePieceLength(sizeInBytes);
   return await new Promise<Buffer>((resolve, reject) => {
