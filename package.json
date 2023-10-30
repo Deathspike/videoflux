@@ -17,7 +17,8 @@
   "dependencies": {
     "commander": "9.4.1",
     "create-torrent": "5.0.9",
-    "fastify": "4.11.0"
+    "fastify": "4.11.0",
+    "once": "1.4.0"
   },
   "devDependencies": {
     "@types/create-torrent": "5.0.1",
