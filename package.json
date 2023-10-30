@@ -16,9 +16,11 @@
   },
   "dependencies": {
     "commander": "9.4.1",
+    "create-torrent": "5.0.9",
     "fastify": "4.11.0"
   },
   "devDependencies": {
+    "@types/create-torrent": "5.0.1",
     "@types/node": "18.11.18",
     "json-schema-to-ts": "2.6.2",
     "pre-commit": "1.2.2",

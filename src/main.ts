@@ -10,7 +10,8 @@ export function main() {
     .addCommand(commandEnqueue())
     .addCommand(commandRollback())
     .addCommand(commandServer())
-    .addCommand(commandStats());
+    .addCommand(commandStats())
+    .addCommand(commandTorrent());
 }
 
 function commandCommit() {
@@ -57,6 +58,13 @@ function commandStats() {
     .argument('<path...>')
     .description('Video stats')
     .action(app.actions.statsAsync);
+}
+
+function commandTorrent() {
+  return new commander.Command('torrent')
+    .argument('<path...>')
+    .description('Create torrent')
+    .action(app.actions.torrentAsync);
 }
 
 function optionQuality() {

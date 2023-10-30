@@ -6,4 +6,5 @@ export * from './functions/commitAsync';
 export * from './functions/encodeAsync';
 export * from './functions/rollbackAsync';
 export * from './functions/statsAsync';
+export * from './functions/torrentAsync';
 export * from './utilities/isVideo';

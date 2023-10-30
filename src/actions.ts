@@ -4,3 +4,4 @@ export * from './actions/enqueueAsync';
 export * from './actions/rollbackAsync';
 export * from './actions/serverAsync';
 export * from './actions/statsAsync';
+export * from './actions/torrentAsync';
