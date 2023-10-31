@@ -16,6 +16,8 @@ export async function serverAsync(options: app.Options) {
 function createHandler(options: app.Options) {
   return async (path: string) => {
     await app.actions.encodeAsync([path], options);
+    if (!process.env['TORRENT']) return;
+    await app.actions.torrentAsync([path]);
   };
 }
 
