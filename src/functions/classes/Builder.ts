@@ -1,6 +1,9 @@
+import * as app from '../..';
+
 export class Builder {
   constructor(
     private readonly filePath: string,
+    private readonly metadata: app.Metadata,
     private readonly params: Params
   ) {}
 
@@ -10,6 +13,7 @@ export class Builder {
     this.createAudioStream(args);
     this.createVideoFilter(args);
     this.createVideoStream(args);
+    this.filterMetadata(args);
     return args;
   }
 
@@ -35,6 +39,40 @@ export class Builder {
     args.push('-crf', `${this.params.av1Crf}`);
     args.push('-preset', `${this.params.av1Preset}`);
     args.push('-pix_fmt', 'yuv420p10le');
+  }
+
+  private filterMetadata(args: Array<string>) {
+    args.push('-map_chapters', '-1');
+    args.push('-map_metadata:g', '-1');
+    args.push('-map_metadata:s', '-1');
+    args.push('-map_metadata:c', '-1');
+    args.push('-map_metadata:p', '-1');
+    for (const stream of this.metadata.streams) {
+      switch (stream.codec_type) {
+        case 'audio':
+        case 'video':
+        case 'subtitle':
+          add(args, 'language', stream);
+          add(args, 'title', stream);
+          break;
+        case 'attachment':
+          add(args, 'filename', stream);
+          add(args, 'mimetype', stream);
+          break;
+      }
+    }
+  }
+}
+
+function add(args: Array<string>, name: string, stream: app.MetadataStream) {
+  if (stream.tags) {
+    const lowerCaseName = name.toLowerCase();
+    for (const [key, value] of Object.entries(stream.tags)) {
+      if (key.toLowerCase() !== lowerCaseName) continue;
+      args.push(`-metadata:s:${stream.index}`);
+      args.push(`${name}=${value}`);
+      break;
+    }
   }
 }
 

@@ -1,7 +1,6 @@
 import * as app from '..';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import {probeAsync} from './helpers/probeAsync';
 
 export async function encodeAsync(paths: Array<string>, options: app.Options) {
   for (const path of paths) {
@@ -38,9 +37,8 @@ async function directoryAsync(directoryPath: string, options: app.Options) {
 }
 
 async function fileAsync(filePath: string, options: app.Options) {
-  if (options.force) return await app.encodeAsync(filePath, options);
-  const metadata = await probeAsync(filePath);
+  const metadata = await app.probeAsync(filePath);
   const streams = metadata.streams.filter(x => x.codec_type === 'video');
-  const isAv1 = streams.every(x => x.codec_name === 'av1');
-  return isAv1 || (await app.encodeAsync(filePath, options));
+  const canSkip = streams.every(x => x.codec_name === 'av1') && !options.force;
+  return canSkip || (await app.encodeAsync(filePath, metadata, options));
 }

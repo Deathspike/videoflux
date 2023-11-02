@@ -4,6 +4,7 @@ export * from './main';
 export * from './types';
 export * from './functions/commitAsync';
 export * from './functions/encodeAsync';
+export * from './functions/probeAsync';
 export * from './functions/rollbackAsync';
 export * from './functions/statsAsync';
 export * from './functions/torrentAsync';

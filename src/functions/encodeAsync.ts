@@ -4,8 +4,12 @@ import * as path from 'node:path';
 import {Builder} from './classes/Builder';
 import {Session} from './classes/Session';
 
-export async function encodeAsync(filePath: string, options: app.Options) {
-  const args = new Builder(filePath, qualities[options.quality]).build();
+export async function encodeAsync(
+  filePath: string,
+  metadata: app.Metadata,
+  options: app.Options
+) {
+  const args = new Builder(filePath, metadata, params[options.quality]).build();
   const outArgs = args.concat('-f', 'matroska', filePath + app.consts.tmpExt);
   if (await Session.runAsync(outArgs, options.verbose)) {
     const {dir, name} = path.parse(filePath);
@@ -18,7 +22,7 @@ export async function encodeAsync(filePath: string, options: app.Options) {
   }
 }
 
-const qualities = {
+const params = {
   hq: {
     av1Crf: 24,
     av1Preset: 9,

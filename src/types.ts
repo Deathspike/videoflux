@@ -1,16 +1,16 @@
-export interface Options {
-  /**
-   * Determines whether to force re-encodes.
-   */
+export type Metadata = {
+  streams: Array<MetadataStream>;
+};
+
+export type MetadataStream = {
+  codec_name: string;
+  codec_type: string;
+  index: number;
+  tags?: Record<string, string>;
+};
+
+export type Options = {
   force?: boolean;
-
-  /**
-   * Determines the encode quality.
-   */
   quality: 'hq' | 'hqd' | 'mq' | 'mqd' | 'lq' | 'lqd';
-
-  /**
-   * Determines whether logging is verbose.
-   */
   verbose?: boolean;
-}
+};
