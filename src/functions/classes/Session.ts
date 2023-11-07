@@ -1,3 +1,4 @@
+import * as app from '../..';
 import * as childProcess from 'node:child_process';
 import {Future} from './Future';
 
@@ -26,14 +27,14 @@ export class Session {
 
   private onData(buffer: Buffer) {
     for (const message of buffer.toString().split('\n')) {
+      if (/^\s+$/.test(message)) continue;
       this.didStart ||= /time=(\d{2}):(\d{2}):(\d{2}\.\d{2})/.test(message);
-      if (!this.verbose) continue;
-      console.debug(message);
+      app.logger.verbose(message, this.verbose);
     }
   }
 
-  private onError(error: Error) {
-    console.error(error.stack);
+  private onError(error: unknown) {
+    app.logger.error(error);
   }
 
   private onExit() {

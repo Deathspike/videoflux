@@ -13,15 +13,15 @@ export async function torrentAsync(paths: Array<string>) {
 async function checkAsync(path: string, filePaths: Array<string>) {
   const stats = await fs.promises.stat(path).catch(() => {});
   if (!stats) {
-    console.log(`Rejected ${path}`);
+    app.logger.info(`Rejected ${path}`);
   } else if (stats.isDirectory()) {
-    console.log(`Checking ${path}`);
+    app.logger.info(`Checking ${path}`);
     await directoryAsync(path, filePaths);
-    console.log(`Finished ${path}`);
+    app.logger.info(`Finished ${path}`);
   } else if (stats.isFile() && app.isVideo(path)) {
-    console.log(`Fetching ${path}`);
+    app.logger.info(`Fetching ${path}`);
     filePaths.push(path);
-    console.log(`Finished ${path}`);
+    app.logger.info(`Finished ${path}`);
   }
 }
 
@@ -41,8 +41,8 @@ async function directoryAsync(directoryPath: string, filePaths: Array<string>) {
 async function writeAsync(rootPath: string, filePaths: Array<string>) {
   const {dir, base} = path.parse(rootPath);
   const torrentPath = path.join(dir, `${base}.torrent`);
-  console.log(`Fetching ${torrentPath}`);
+  app.logger.info(`Fetching ${torrentPath}`);
   const torrent = await app.torrentAsync(rootPath, filePaths);
   await fs.promises.writeFile(torrentPath, torrent);
-  console.log(`Finished ${torrentPath}`);
+  app.logger.info(`Finished ${torrentPath}`);
 }

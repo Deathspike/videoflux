@@ -11,15 +11,15 @@ export async function encodeAsync(paths: Array<string>, options: app.Options) {
 async function checkAsync(path: string, options: app.Options) {
   const stats = await fs.promises.stat(path).catch(() => {});
   if (!stats) {
-    console.log(`Rejected ${path}`);
+    app.logger.info(`Rejected ${path}`);
   } else if (stats.isDirectory()) {
-    console.log(`Checking ${path}`);
+    app.logger.info(`Checking ${path}`);
     await directoryAsync(path, options);
-    console.log(`Finished ${path}`);
+    app.logger.info(`Finished ${path}`);
   } else if (stats.isFile() && app.isVideo(path)) {
-    console.log(`Fetching ${path}`);
+    app.logger.info(`Fetching ${path}`);
     const result = await fileAsync(path, options).catch(() => false);
-    console.log(`Finished ${path} (${result})`);
+    app.logger.info(`Finished ${path} (${result})`);
   }
 }
 

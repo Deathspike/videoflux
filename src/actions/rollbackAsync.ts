@@ -11,15 +11,15 @@ export async function rollbackAsync(paths: Array<string>) {
 async function checkAsync(path: string) {
   const stats = await fs.promises.stat(path).catch(() => {});
   if (!stats) {
-    console.log(`Rejected ${path}`);
+    app.logger.info(`Rejected ${path}`);
   } else if (stats.isDirectory()) {
-    console.log(`Checking ${path}`);
+    app.logger.info(`Checking ${path}`);
     await directoryAsync(path);
-    console.log(`Finished ${path}`);
+    app.logger.info(`Finished ${path}`);
   } else if (stats.isFile() && path.endsWith(app.consts.bckExt)) {
-    console.log(`Fetching ${path}`);
+    app.logger.info(`Fetching ${path}`);
     const result = await app.rollbackAsync(path, stats).catch(() => false);
-    console.log(`Finished ${path} (${result})`);
+    app.logger.info(`Finished ${path} (${result})`);
   }
 }
 

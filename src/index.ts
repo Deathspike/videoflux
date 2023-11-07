@@ -9,3 +9,4 @@ export * from './functions/rollbackAsync';
 export * from './functions/statsAsync';
 export * from './functions/torrentAsync';
 export * from './utilities/isVideo';
+export * from './utilities/logger';

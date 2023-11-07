@@ -1,15 +1,17 @@
+import * as app from '..';
+
 export async function enqueueAsync(serverUrl: string, paths: Array<string>) {
   const headers = {'Content-Type': 'application/json'};
   const method = 'POST';
   const url = normalizeUrl(serverUrl);
   for (const path of paths) {
     try {
-      console.log(`Fetching ${path}`);
+      app.logger.info(`Fetching ${path}`);
       const body = JSON.stringify({series: {path}});
       const response = await fetch(url, {body, headers, method});
-      console.log(`Finished ${path} (${response.statusText})`);
+      app.logger.info(`Finished ${path} (${response.statusText})`);
     } catch {
-      console.log(`Rejected ${path}`);
+      app.logger.info(`Rejected ${path}`);
     }
   }
 }

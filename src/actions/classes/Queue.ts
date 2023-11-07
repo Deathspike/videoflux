@@ -1,3 +1,4 @@
+import * as app from '../..';
 import * as fs from 'node:fs';
 import * as os from 'node:os';
 import * as path from 'node:path';
@@ -29,6 +30,10 @@ export class Queue {
       .catch(() => []);
   }
 
+  all() {
+    return this.items.slice();
+  }
+
   enqueue(value?: string) {
     if (!value) return;
     this.items.push(value);
@@ -36,16 +41,12 @@ export class Queue {
     this.writeQueue = this.writeQueue.then(() => this.writeAsync());
   }
 
-  slice() {
-    return this.items.slice();
-  }
-
   private async processAsync() {
     while (this.items.length) {
       try {
         await this.handlerAsync(this.items[0]!);
       } catch (error) {
-        console.error(error);
+        app.logger.error(error);
       } finally {
         this.items.shift();
         this.writeQueue = this.writeQueue.then(() => this.writeAsync());
@@ -59,7 +60,7 @@ export class Queue {
       await fs.promises.mkdir(rootPath, {recursive: true});
       await fs.promises.writeFile(this.filePath, value);
     } catch (error) {
-      console.error(error);
+      app.logger.error(error);
     }
   }
 }

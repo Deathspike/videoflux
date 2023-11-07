@@ -24,12 +24,13 @@ function createHandler(options: app.Options) {
 function get(queue: Queue): fastify.RouteOptions {
   return {
     method: 'GET',
-    url: '*',
+    url: '/api/v1',
     handler: (_, res) => {
       res.send({
         name: packageData.name,
         version: packageData.version,
-        queue: queue.slice()
+        events: app.logger.all(),
+        queue: queue.all()
       });
     }
   };
@@ -38,7 +39,7 @@ function get(queue: Queue): fastify.RouteOptions {
 function post(queue: Queue): fastify.RouteOptions {
   return {
     method: 'POST',
-    url: '*',
+    url: '/api/v1',
     schema: {
       body: Data
     },
