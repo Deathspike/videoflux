@@ -49,6 +49,7 @@ function commandRollback() {
 function commandServer() {
   return new commander.Command('server')
     .description('Listen for HTTP events')
+    .option('-v, --verbose', 'Determines whether logging is verbose')
     .addOption(optionQuality())
     .action(app.actions.serverAsync);
 }
